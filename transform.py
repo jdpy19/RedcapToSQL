@@ -4,7 +4,7 @@ import logging
 def transform_data(redcap_data_json):
   """Transform process from redcap data to enrollment and survey dataframes"""
   redcap_data = pd.DataFrame(redcap_data_json)
-
+  
   # Split data by event type
   enrollment_data = redcap_data[redcap_data['redcap_event_name']=='Enrollment']
   survey_data = redcap_data[redcap_data['redcap_event_name']!='Enrollment']

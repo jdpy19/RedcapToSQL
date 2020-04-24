@@ -4,7 +4,8 @@ from sqlalchemy import Column, Date, Float, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 import logging
 
-from config import SERVER, DATABASE, USER, PASSWORD, IP_ADDRESS, MYSQL_DATABASE
+from config import SERVER, DATABASE
+from config import USER, PASSWORD, IP_ADDRESS, MYSQL_DATABASE
 
 Base = declarative_base()
 

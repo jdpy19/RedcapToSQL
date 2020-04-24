@@ -9,10 +9,12 @@ verify_ssl = true
 pylint = "*"
 
 [packages]
+[packages]
 requests = "*"
 sqlalchemy = "*"
 pandas = "*"
 mysqlclient = "*"
+pyodbc = "*"
 
 [requires]
 python_version = "3.7"
