@@ -5,8 +5,6 @@ from redcap import RedCapSession
 from transform import transform_data
 from db import DatabaseManager
 
-from config import SERVER, DATABASE
-
 def main():
   f_handler = logging.FileHandler('debug.log')
   f_handler.setLevel(logging.INFO)
@@ -17,8 +15,14 @@ def main():
   logger.setLevel(logging.INFO)
   logger.addHandler(f_handler)
 
+  if ENGINE_TYPE == 'sqlserver':
+    from config import SERVER, DATABASE
+    db = DatabaseManager(engineType=ENGINE_TYPE, server=SERVER, database=DATABASE)
+  elif ENGINE_TYPE == 'mysql':
+    from config import USER, PASSWORD, MYSQL_DATABASE, IP_ADDRESS
+    db = DatabaseManager(engineType=ENGINE_TYPE, server=IP_ADDRESS, database=MYSQL_DATABASE, user=USER, password=PASSWORD) 
+  
   api = RedCapSession(API_TOKEN)
-  db = DatabaseManager(engineType=ENGINE_TYPE, server=SERVER, database=DATABASE)
   enrollment_data, survey_data = transform_data(api.exportRecord(rawOrLabel='label'))
 
   try:
