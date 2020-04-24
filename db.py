@@ -4,31 +4,28 @@ from sqlalchemy import Column, Date, Float, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 import logging
 
-from config import SERVER, DATABASE
-from config import USER, PASSWORD, IP_ADDRESS, MYSQL_DATABASE
-
 Base = declarative_base()
 
-def create_sqlserver_engine():
+def create_sqlserver_engine(server, database):
   """Return a SQL server engine"""
   driver = 'ODBC Driver 17 for SQL Server'
-  engine_string = 'mssql+pyodbc://{server}/{database}?driver={driver}'.format(server=SERVER, database=DATABASE, driver=driver)
+  engine_string = 'mssql+pyodbc://{server}/{database}?driver={driver}'.format(server=server, database=database, driver=driver)
   engine = create_engine(engine_string)
   return engine
 
-def create_mysql_engine():
-  engine_string = "mysql://{user}:{password}@{ip}/{database}".format(user=USER, password=PASSWORD, ip=IP_ADDRESS, database=MYSQL_DATABASE)
+def create_mysql_engine(server, database, user, password):
+  engine_string = "mysql://{user}:{password}@{server}/{database}".format(user=user, password=password, server=server, database=database)
   engine = create_engine(engine_string, echo=True)
   return engine
 
 class DatabaseManager:
-  def __init__(self, engineType='sqlserver'):
+  def __init__(self, engineType='sqlserver', server=None, database=None, user=None, password=None):
     self.logger = logging.getLogger(__name__)
 
     if engineType == 'sqlserver':
-      self.engine = create_sqlserver_engine()
+      self.engine = create_sqlserver_engine(server, database)
     elif engineType == 'mysql':
-      self.engine = create_mysql_engine()
+      self.engine = create_mysql_engine(server, database, user, password)
     else:
       try: 
         raise ValueError

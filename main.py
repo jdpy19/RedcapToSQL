@@ -5,6 +5,7 @@ from redcap import RedCapSession
 from transform import transform_data
 from db import DatabaseManager
 
+from config import SERVER, DATABASE
 
 def main():
   f_handler = logging.FileHandler('debug.log')
@@ -17,7 +18,7 @@ def main():
   logger.addHandler(f_handler)
 
   api = RedCapSession(API_TOKEN)
-  db = DatabaseManager(engineType=ENGINE_TYPE)
+  db = DatabaseManager(engineType=ENGINE_TYPE, server=SERVER, database=DATABASE)
   enrollment_data, survey_data = transform_data(api.exportRecord(rawOrLabel='label'))
 
   try:
