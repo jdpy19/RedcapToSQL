@@ -176,6 +176,3 @@ class DatabaseManager:
     self.Base.metadata.create_all(self.engine)
     self.Session = sessionmaker(bind=self.engine)
     self.session = self.Session()
-
-  def insert_or_update(self, table, data):
-    pass
