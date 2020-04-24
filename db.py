@@ -20,6 +20,25 @@ def create_mysql_engine():
   engine = create_engine(engine_string, echo=True)
   return engine
 
+class DatabaseManager:
+  def __init__(self, engineType='sqlserver'):
+    self.logger = logging.getLogger(__name__)
+
+    if engineType == 'sqlserver':
+      self.engine = create_sqlserver_engine()
+    elif engineType == 'mysql':
+      self.engine = create_mysql_engine()
+    else:
+      try: 
+        raise ValueError
+      except:
+        self.logger.error("ValueError | Invalid Engine | EngineType: {}".format(engineType))
+
+    self.Base = Base
+    self.Base.metadata.create_all(self.engine)
+    self.Session = sessionmaker(bind=self.engine)
+    self.session = self.Session()
+
 class Enrollment(Base):
   """Create a table for Enrollment events from redcap survey"""
   __tablename__ = "COVID19_ININD_BV_REPORT_ENROLLMENT"
@@ -153,21 +172,3 @@ class Survey(Base):
   identical_pui_covid_flag = Column(Boolean)
   bed_ventilator_reporting_complete = Column(String(15))
 
-class DatabaseManager:
-  def __init__(self, engineType='sqlserver'):
-    self.logger = logging.getLogger(__name__)
-
-    if engineType == 'sqlserver':
-      self.engine = create_sqlserver_engine()
-    elif engineType == 'mysql':
-      self.engine = create_mysql_engine()
-    else:
-      try: 
-        raise ValueError
-      except:
-        self.logger.error("ValueError | Invalid Engine | EngineType: {}".format(engineType))
-
-    self.Base = Base
-    self.Base.metadata.create_all(self.engine)
-    self.Session = sessionmaker(bind=self.engine)
-    self.session = self.Session()
