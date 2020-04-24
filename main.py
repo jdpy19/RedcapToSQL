@@ -1,6 +1,6 @@
 import logging
 
-from config import API_TOKEN
+from config import API_TOKEN, ENGINE_TYPE
 from redcap import RedCapSession
 from transform import transform_data
 from db import DatabaseManager
@@ -17,7 +17,7 @@ def main():
   logger.addHandler(f_handler)
 
   api = RedCapSession(API_TOKEN)
-  db = DatabaseManager(engineType='mysql')
+  db = DatabaseManager(engineType=ENGINE_TYPE)
   enrollment_data, survey_data = transform_data(api.exportRecord(rawOrLabel='label'))
 
   try:

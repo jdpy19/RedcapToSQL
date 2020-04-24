@@ -19,6 +19,12 @@ python_version = "3.7"
 ```
 
 ## Create a config.py 
+Required fields include the api token, engine type and respective credentials.
+```
+ENGINE_TYPE = "mysql" | "sqlserver"
+API_TOKEN = ""
+```
+
 Add the following fields for SQL Server using Windows credentials
 ```
 DATABASE = ""
