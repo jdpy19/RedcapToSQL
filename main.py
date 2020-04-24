@@ -8,8 +8,8 @@ def main():
   db = DatabaseManager(engineType='mysql')
   enrollment_data, survey_data = transform_data(api.exportRecord(rawOrLabel='label'))
 
-  enrollment_data.to_sql('COVID19_ININD_BV_REPORT_ENROLLMENT', db.engine, if_exists='replace')
-  survey_data.to_sql('COVID19_ININD_BV_REPORT_SURVEY', db.engine, if_exists='replace')
+  enrollment_data.to_sql('COVID19_ININD_BV_REPORT_ENROLLMENT', db.engine, if_exists='replace') # Replace table with new export. 
+  survey_data.to_sql('COVID19_ININD_BV_REPORT_SURVEY', db.engine, if_exists='replace') # If data becomes large, change to INSERT_OR_UPDATE
 
 if __name__ == '__main__':
   main()
