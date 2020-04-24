@@ -20,14 +20,17 @@ python_version = "3.7"
 
 ## Create a config.py 
 Add the following fields for SQL Server using Windows credentials
-* DATABASE
-* SERVER
+```
+DATABASE = ""
+SERVER = ""
+```
 
 Add the following fields for MySQL Server
-* USER
-* PASSWORD
-* IP_ADDRESS
-* MYSQL_DATABASE
+```
+USER = ""
+IP_ADDRESS ="" 
+MYSQL_DATABASE =""
+```
 
 ## Modify db.py for survey specific tables
 Tables should be created by inheriting the class Base (Declarative_Base from SQLAlchemy), defining the table name and adding survey specific columns. Examples in code are Enrollment and Survey.

@@ -156,11 +156,6 @@ class Survey(Base):
 class DatabaseManager:
   def __init__(self, engineType='sqlserver'):
     self.logger = logging.getLogger(__name__)
-    f_handler = logging.FileHandler('debug.log')
-    f_handler.setLevel(logging.ERROR)
-    f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    f_handler.setFormatter(f_format)
-    self.logger.addHandler(f_handler)
 
     if engineType == 'sqlserver':
       self.engine = create_sqlserver_engine()

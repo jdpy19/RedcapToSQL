@@ -8,13 +8,7 @@ class RedCapSession():
     self.url = 'https://redcap.ascension.org/inind/api/'
     self.session = requests.Session()
     self.token = token
-
     self.logger = logging.getLogger(__name__)
-    f_handler = logging.FileHandler('debug.log')
-    f_handler.setLevel(logging.ERROR)
-    f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    f_handler.setFormatter(f_format)
-    self.logger.addHandler(f_handler)
 
   def exportRecord(self, record_ids = [], rawOrLabel='label', rawOrLabelHeaders='label'):
     data = {
