@@ -1,10 +1,11 @@
 import pandas as pd
+import numpy as np
 import logging
 
 def transform_data(redcap_data_json):
   """Transform process from redcap data to enrollment and survey dataframes"""
   redcap_data = pd.DataFrame(redcap_data_json)
-  
+  redcap_data.to_csv('data.csv')
   # Split data by event type
   enrollment_data = redcap_data[redcap_data['redcap_event_name']=='Enrollment']
   survey_data = redcap_data[redcap_data['redcap_event_name']!='Enrollment']
@@ -58,6 +59,13 @@ def transform_data(redcap_data_json):
       'july_trigger',
       'contact_market_facility_complete'
     ], axis=1)
+
+  # Fill Missing Data
+  survey_data = survey_data.replace("", np.nan) # Replace all empty strings with nan
+  survey_data.to_csv('preSurveyData.csv')
+  survey_data = survey_data.fillna(survey_data.groupby('record_id').ffill()) # Forward fill missing data
+  survey_data = survey_data.fillna(survey_data.groupby('record_id').bfill()) # Backward fill missing data
+  survey_data.to_csv('postSurveyData.csv')
 
   # Fill in survey data ministry and facility
   facility_params = {

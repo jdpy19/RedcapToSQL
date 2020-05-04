@@ -12,6 +12,7 @@ sqlalchemy = "*"
 pandas = "*"
 mysqlclient = "*"
 pyodbc = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.7"
