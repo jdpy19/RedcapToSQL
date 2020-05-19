@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Date, Float, Integer, String, Boolean
+from sqlalchemy import Column, DateTime, Float, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 import logging
 
@@ -39,43 +39,43 @@ class DatabaseManager:
 
 class Enrollment(Base):
   """Create a table for Enrollment events from redcap survey"""
-  __tablename__ = "COVID19_ININD_BV_REPORT_ENROLLMENT"
+  __tablename__ = "tbl_NAV_COVID19_RedCap_Enrollment"
   # Columns  
   id = Column(Integer, primary_key=True)
-  record_id = Column(String(15), index=True)
-  redcap_event_name = Column(String(25))
-  ministry = Column(String(10))
-  facility = Column(String(50))
-  email = Column(String(50))
-  am_email_1 = Column(String(50))
-  am_email_2 = Column(String(50))
-  am_email_3 = Column(String(50))
-  am_email_4 = Column(String(50))
-  am_email_5 = Column(String(50))
-  am_email_6 = Column(String(50))
-  pm_email_1 = Column(String(50))
-  pm_email_2 = Column(String(50))
-  pm_email_3 = Column(String(50))
-  pm_email_4 = Column(String(50))
-  pm_email_5 = Column(String(50))
-  pm_email_6 = Column(String(50))
-  april_trigger = Column(String(5))
-  may_trigger = Column(String(5))
-  june_trigger = Column(String(5))
-  july_trigger = Column(String(5))
-  contact_market_facility_complete = Column(String(15))
+  record_id = Column(String(255), index=True)
+  redcap_event_name = Column(DateTime)
+  ministry = Column(String(255))
+  facility = Column(String(255))
+  email = Column(String(255))
+  am_email_1 = Column(String(255))
+  am_email_2 = Column(String(255))
+  am_email_3 = Column(String(255))
+  am_email_4 = Column(String(255))
+  am_email_5 = Column(String(255))
+  am_email_6 = Column(String(255))
+  pm_email_1 = Column(String(255))
+  pm_email_2 = Column(String(255))
+  pm_email_3 = Column(String(255))
+  pm_email_4 = Column(String(255))
+  pm_email_5 = Column(String(255))
+  pm_email_6 = Column(String(255))
+  april_trigger = Column(String(255))
+  may_trigger = Column(String(255))
+  june_trigger = Column(String(255))
+  july_trigger = Column(String(255))
+  contact_market_facility_complete = Column(String(255))
 
 class Survey(Base):
   """Create a table for survey events from redcap survey"""
-  __tablename__ = "COVID19_ININD_BV_REPORT_SURVEY"
+  __tablename__ = "tbl_NAV_COVID19_RedCap_Survey"
   # Columns
   id = Column(Integer, primary_key=True)
-  record_id = Column(String(15), index=True)
-  redcap_event_name = Column(String(25))
-  ministry = Column(String(10))
-  facility = Column(String(50))
+  record_id = Column(String(255), index=True)
+  redcap_event_name = Column(DateTime)
+  ministry = Column(String(255))
+  facility = Column(String(255))
   am_detector = Column(Integer)
-  facility_event = Column(String(50)) # Could be converted into a datetime
+  facility_event = Column(String(255)) # Could be converted into a datetime
   icu_bed_cap = Column(Integer)
   icu_bed_staffed = Column(Integer)
   icu_bed_occupied = Column(Integer)
@@ -168,5 +168,5 @@ class Survey(Base):
   covid_deaths = Column(Integer)
   covid_occupied_flag = Column(Boolean)
   identical_pui_covid_flag = Column(Boolean)
-  bed_ventilator_reporting_complete = Column(String(15))
+  bed_ventilator_reporting_complete = Column(String(255))
 

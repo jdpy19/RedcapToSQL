@@ -1,14 +1,17 @@
 import pandas as pd
 import numpy as np
 import logging
+import datetime
 
 def transform_data(redcap_data_json):
   """Transform process from redcap data to enrollment and survey dataframes"""
   redcap_data = pd.DataFrame(redcap_data_json)
   redcap_data.to_csv('data.csv')
+
   # Split data by event type
   enrollment_data = redcap_data[redcap_data['redcap_event_name']=='Enrollment']
   survey_data = redcap_data[redcap_data['redcap_event_name']!='Enrollment']
+  survey_data['redcap_event_name'] = survey_data['redcap_event_name'].apply(lambda x: datetime.datetime(int(x[0:4]), int(x[5:7]), int(x[8:10]), 1, 0) if x[11:13] == "AM" else datetime.datetime(int(x[0:4]), int(x[5:7]), int(x[8:10]), 13, 0))
 
   # Exclude/Include relevant columns
   enrollment_data = enrollment_data[
@@ -62,10 +65,8 @@ def transform_data(redcap_data_json):
 
   # Fill Missing Data
   survey_data = survey_data.replace("", np.nan) # Replace all empty strings with nan
-  survey_data.to_csv('preSurveyData.csv')
   survey_data = survey_data.fillna(survey_data.groupby('record_id').ffill()) # Forward fill missing data
   survey_data = survey_data.fillna(survey_data.groupby('record_id').bfill()) # Backward fill missing data
-  survey_data.to_csv('postSurveyData.csv')
 
   # Fill in survey data ministry and facility
   facility_params = {

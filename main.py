@@ -26,13 +26,12 @@ def main():
   enrollment_data, survey_data = transform_data(api.exportRecord(rawOrLabel='label'))
 
   try:
-    enrollment_data.to_sql('COVID19_ININD_BV_REPORT_ENROLLMENT', db.engine, if_exists='replace') # Replace table with new export. 
+    enrollment_data.to_sql('tbl_NAV_COVID19_RedCap_Enrollment', db.engine, if_exists='replace') # Replace table with new export. 
     logger.info("Successfully updated COVID19_ININD_BV_REPORT_ENROLLMENT")
-    survey_data.to_sql('COVID19_ININD_BV_REPORT_SURVEY', db.engine, if_exists='replace') # If data becomes large, change to INSERT_OR_UPDATE
+    survey_data.to_sql('tbl_NAV_COVID19_RedCap_Survey', db.engine, if_exists='replace') # If data becomes large, change to INSERT_OR_UPDATE
     logger.info("Successfully updated COVID19_ININD_BV_REPORT_SURVEY")
   except:
-    logger.warning("FAILED TO UPDATE COVID19_ININ_BV_REPORT TABLES")
+    logger.warning("FAILED TO UPDATE TABLES")
 if __name__ == '__main__':
   main()
-
 
